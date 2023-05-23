@@ -31,6 +31,8 @@ int displayRefreshRate;
 SDL_Renderer *render;
 
 Sprite *player;
+
+// <top obstacle, bottom obstacle, obstacle passed>
 std::tuple<Sprite, Sprite, bool> obstacles[NUM_OBSTACLES];
 Sprite *obstacleTop;
 Sprite *obstacleBottom;

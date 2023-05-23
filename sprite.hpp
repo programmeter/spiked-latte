@@ -20,20 +20,14 @@ public:
         hitbox.w = width;
         hitbox.h = height;
 
-        tmpWidth = width;
-        tmpHeight = height;
-
         render = paramRender;
 
         surface = IMG_Load(imgPath);
         texture = SDL_CreateTextureFromSurface(render, surface);
         SDL_FreeSurface(surface);
 
-        if (manuallySetSize)
+        if (!manuallySetSize)
         {
-            SDL_QueryTexture(texture, NULL, NULL, &tmpWidth, &tmpHeight);
-        }
-        else {
             SDL_QueryTexture(texture, NULL, NULL, &width, &height);
         }
     }
@@ -58,9 +52,6 @@ private:
     SDL_Surface *surface;
     SDL_Texture *texture;
     SDL_Rect hitbox;
-
-    int tmpWidth;
-    int tmpHeight;
 };
 
 #endif

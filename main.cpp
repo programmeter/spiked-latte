@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 
     // Draw the scene
     playFrame();
-    startMessage->draw();
+    startMessage->draw();    
     SDL_RenderPresent(render);
     // Wait for player to press space to start game
     waitForSpacePress();
