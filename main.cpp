@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
     // Create obstacle sprites
     obstacleGap = player->height * 3.5;
-    obstacleSpeed = winWidth / 1000;
+    obstacleSpeed = 2.6;
 
     resetObstacles();
 
