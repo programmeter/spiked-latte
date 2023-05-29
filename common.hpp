@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include <stdlib.h>
 #include <tuple>
 #include <string>
 
@@ -30,17 +31,15 @@ int displayRefreshRate;
 
 SDL_Renderer *render;
 
-Sprite *player;
-
-// <top obstacle, bottom obstacle, obstacle passed>
-std::tuple<Sprite, Sprite, bool> obstacles[NUM_OBSTACLES];
+Sprite player;
+tuple<Sprite, Sprite, bool> obstacles[NUM_OBSTACLES];
 Sprite *obstacleTop;
 Sprite *obstacleBottom;
 
-Text *missingMessage;
-Text *deathMessage;
-Text *scoreMessage;
-Text *hiScoreMessage;
+Text missingMessage;
+Text deathMessage;
+Text scoreMessage;
+Text hiScoreMessage;
 
 string playerDeadImgPath = PLAYER_DEAD_IMG_PATH;
 string playerImgPath = PLAYER_IMG_PATH;

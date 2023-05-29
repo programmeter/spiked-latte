@@ -15,7 +15,7 @@ public:
     int y = 0;
     SDL_Rect hitbox;
 
-    void init(SDL_Renderer *paramRender, const char *text, const char *fontPath, int fontSize)
+    void setImg(SDL_Renderer *paramRender, const char *text, const char *fontPath, int fontSize)
     {
         render = paramRender;
 

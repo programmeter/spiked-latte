@@ -49,6 +49,7 @@ void waitForSpacePress()
     }
 }
 
+// Set obstacles to starting position
 void resetObstacles()
 {
     for (int i = 0; i < NUM_OBSTACLES; i++)
@@ -57,19 +58,19 @@ void resetObstacles()
         obstacleBottom = &get<1>(obstacles[i]);
 
         // Set attributes for top obstacle
-        obstacleTop->height = winHeight / 2;
-        obstacleTop->width = winWidth / 12;
+        obstacleTop->h = winHeight / 2;
+        obstacleTop->w = winWidth / 12;
         obstacleTop->x = winWidth + i * winWidth / NUM_OBSTACLES;
         obstacleTop->y = -(rand() % (winHeight / 3));
 
         // Set attributes for bottom obstacle
-        obstacleBottom->height = obstacleTop->height;
-        obstacleBottom->width = obstacleTop->width;
+        obstacleBottom->h = obstacleTop->h;
+        obstacleBottom->w = obstacleTop->w;
         obstacleBottom->x = obstacleTop->x;
-        obstacleBottom->y = obstacleTop->y + obstacleTop->height + obstacleGap;
+        obstacleBottom->y = obstacleTop->y + obstacleTop->h + obstacleGap;
 
-        obstacleTop->init(render, obstacleTopImgPath.c_str());
-        obstacleBottom->init(render, obstacleBottomImgPath.c_str());
+        obstacleTop->setImg(render, obstacleTopImgPath.c_str());
+        obstacleBottom->setImg(render, obstacleBottomImgPath.c_str());
 
         get<2>(obstacles[i]) = false;
 
@@ -92,14 +93,14 @@ void playFrame()
         {
             if (event.key.keysym.scancode == SDL_SCANCODE_SPACE && playerSpeed > 0)
             {
-                playerSpeed = -player->height * 5.5 - score * 2;
+                playerSpeed = -player.h * 5.5 - score * 2;
             }
         }
     }
 
     playerSpeed += GRAVITY_ACCELERATION / displayRefreshRate;
 
-    player->y += playerSpeed / displayRefreshRate;
+    player.y += playerSpeed / displayRefreshRate;
 
     SDL_RenderClear(render);
 
@@ -116,9 +117,9 @@ void playFrame()
         obstacleBottom->draw();
 
         // Moves passed obstacles to front
-        if (obstacleTop->x + obstacleTop->width < 0)
+        if (obstacleTop->x + obstacleTop->w < 0)
         {
-            obstacleTop->x = get<0>(obstacles[lastObstacleIndex]).x + get<0>(obstacles[lastObstacleIndex]).width + winWidth / NUM_OBSTACLES;
+            obstacleTop->x = get<0>(obstacles[lastObstacleIndex]).x + get<0>(obstacles[lastObstacleIndex]).w + winWidth / NUM_OBSTACLES;
             obstacleBottom->x = obstacleTop->x;
             get<2>(obstacles[i]) = false;
 
@@ -126,19 +127,19 @@ void playFrame()
         }
 
         // Check if obstacle was passed (add score)
-        if (player->x > obstacleTop->x + obstacleTop->width &&
+        if (player.x > obstacleTop->x + obstacleTop->w &&
             !get<2>(obstacles[i]))
         {
             score++;
             get<2>(obstacles[i]) = true;
 
-            scoreMessage->init(render, ("SCORE "s + to_string(score)).c_str(), FONT_PATH, 24);
+            scoreMessage.setImg(render, ("SCORE "s + to_string(score)).c_str(), FONT_PATH, 24);
 
             // Set new high score
             if (score > hiScore)
             {
                 hiScore = score;
-                hiScoreMessage->init(render, ("HI SCORE "s + to_string(hiScore)).c_str(), FONT_PATH, 24);
+                hiScoreMessage.setImg(render, ("HI SCORE "s + to_string(hiScore)).c_str(), FONT_PATH, 24);
 
                 ofstream hiScoreFile(HI_SCORE_PATH);
 
@@ -149,57 +150,57 @@ void playFrame()
         }
 
         // Collision with top obstacle
-        if (player->x + player->width >= obstacleTop->x &&
-            player->x <= obstacleTop->x + obstacleTop->width &&
-            player->y >= obstacleTop->y &&
-            player->y <= obstacleTop->y + obstacleTop->height)
+        if (player.x + player.w >= obstacleTop->x &&
+            player.x <= obstacleTop->x + obstacleTop->w &&
+            player.y >= obstacleTop->y &&
+            player.y <= obstacleTop->y + obstacleTop->h)
         {
             collided = true;
         }
 
         // Collision with bottom obstacle
-        if (player->x + player->width >= obstacleBottom->x &&
-            player->x <= obstacleBottom->x + obstacleBottom->width &&
-            player->y + player->width >= obstacleBottom->y)
+        if (player.x + player.w >= obstacleBottom->x &&
+            player.x <= obstacleBottom->x + obstacleBottom->w &&
+            player.y + player.w >= obstacleBottom->y)
         {
             collided = true;
         }
 
         // Out of bounds
-        if (player->y + player->height <= 0 ||
-            player->y >= winHeight)
+        if (player.y + player.h <= 0 ||
+            player.y >= winHeight)
         {
             collided = true;
             outOfBounds = true;
         }
     }
 
-    scoreMessage->draw();
-    hiScoreMessage->draw();
+    scoreMessage.draw();
+    hiScoreMessage.draw();
 
     if (collided)
     {
         if (outOfBounds)
         {
-            missingMessage->draw();
+            missingMessage.draw();
             outOfBounds = false;
         }
         else
         {
-            player->init(render, playerDeadImgPath.c_str());
-            player->draw();
-            deathMessage->draw();
+            player.setImg(render, playerDeadImgPath.c_str());
+            player.draw();
+            deathMessage.draw();
         }
 
-        player->x = winWidth / 2 - player->width / 2;
-        player->y = winHeight / 2 + player->width / 2;
+        player.x = winWidth / 2 - player.w / 2;
+        player.y = winHeight / 2 + player.w / 2;
 
         playerSpeed = 0;
         score = 0;
 
         collided = false;
-        player->init(render, playerImgPath.c_str());
-        scoreMessage->init(render, "SCORE 0", FONT_PATH, 24);
+        player.setImg(render, playerImgPath.c_str());
+        scoreMessage.setImg(render, "SCORE 0", FONT_PATH, 24);
 
         SDL_RenderPresent(render);
 
@@ -208,7 +209,7 @@ void playFrame()
     }
     else
     {
-        player->draw();
+        player.draw();
     }
 
     SDL_RenderPresent(render);

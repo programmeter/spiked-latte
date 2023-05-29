@@ -12,13 +12,13 @@ class Sprite
 public:
     int x = 0;
     int y = 0;
-    int width = 0;
-    int height = 0;
+    int w = 0;
+    int h = 0;
 
-    void init(SDL_Renderer *paramRender, const char *imgPath, bool manuallySetSize = true)
+    void setImg(SDL_Renderer *paramRender, const char *imgPath, bool autoSetSize = false)
     {
-        hitbox.w = width;
-        hitbox.h = height;
+        hitbox.w = w;
+        hitbox.h = h;
 
         render = paramRender;
 
@@ -26,9 +26,9 @@ public:
         texture = SDL_CreateTextureFromSurface(render, surface);
         SDL_FreeSurface(surface);
 
-        if (!manuallySetSize)
+        if (autoSetSize)
         {
-            SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+            SDL_QueryTexture(texture, NULL, NULL, &w, &h);
         }
     }
 
@@ -52,6 +52,9 @@ private:
     SDL_Surface *surface;
     SDL_Texture *texture;
     SDL_Rect hitbox;
+
+    int tmpWidth;
+    int tmpHeight;
 };
 
 #endif

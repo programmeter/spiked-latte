@@ -52,62 +52,52 @@ int main(int argc, char *argv[])
 
     hiScoreFile.close();
 
-    // Set player attributes
-    player = new Sprite();
-
-    player->width = winHeight / 12;
-    player->height = winHeight / 12;
-    player->x = winWidth / 2 - player->width / 2;
-    player->y = winHeight / 2 + player->width / 2;
+    // Set player properties
+    player.w = winHeight / 12;
+    player.h = winHeight / 12;
+    player.x = winWidth / 2 - player.w / 2;
+    player.y = winHeight / 2 + player.w / 2;
 
     // Create starting message
-    Text *startMessage = new Text();
+    Text startMessage;
 
-    startMessage->init(render, "PRESS SPACE TO START", FONT_PATH, 24);
-    startMessage->x = winWidth / 2 - startMessage->hitbox.w / 2;
-    startMessage->y = player->y + player->height + 100;
+    startMessage.setImg(render, "PRESS SPACE TO START", FONT_PATH, 24);
+    startMessage.x = winWidth / 2 - startMessage.hitbox.w / 2;
+    startMessage.y = player.y + player.h + 100;
 
-    // Create death message
-    deathMessage = new Text();
+    // Set death message properties
+    deathMessage.setImg(render, "COFFEE SPILLED! PRESS SPACE TO START", FONT_PATH, 24);
+    deathMessage.x = winWidth / 2 - deathMessage.hitbox.w / 2;
+    deathMessage.y = player.y + player.h + 100;
 
-    deathMessage->init(render, "COFFEE SPILLED! PRESS SPACE TO START", FONT_PATH, 24);
-    deathMessage->x = winWidth / 2 - deathMessage->hitbox.w / 2;
-    deathMessage->y = player->y + player->height + 100;
+    // Set "coffee missing" message properties
+    missingMessage.setImg(render, "COFFEE MISSING! PRESS SPACE TO START", FONT_PATH, 24);
+    missingMessage.x = winWidth / 2 - missingMessage.hitbox.w / 2;
+    missingMessage.y = player.y + player.h + 100;    
 
-    // Create "coffee missing" message
-    missingMessage = new Text();
+    // Set score counter properties
+    scoreMessage.setImg(render, "SCORE 0", FONT_PATH, 24);
+    scoreMessage.x = 25;
+    scoreMessage.y = 25;
 
-    missingMessage->init(render, "COFFEE MISSING! PRESS SPACE TO START", FONT_PATH, 24);
-    missingMessage->x = winWidth / 2 - missingMessage->hitbox.w / 2;
-    missingMessage->y = player->y + player->height + 100;
+    // Set high score counter properties
+    hiScoreMessage.setImg(render, ("HI SCORE "s + to_string(hiScore)).c_str(), FONT_PATH, 24);
+    hiScoreMessage.x = scoreMessage.x;
+    hiScoreMessage.y = scoreMessage.y + scoreMessage.hitbox.h + 10;
 
-    // Create score counter
-    scoreMessage = new Text();
-
-    scoreMessage->init(render, "SCORE 0", FONT_PATH, 24);
-    scoreMessage->x = 25;
-    scoreMessage->y = 25;
-
-    // Create high score counter
-    hiScoreMessage = new Text();
-
-    hiScoreMessage->init(render, ("HI SCORE "s + to_string(hiScore)).c_str(), FONT_PATH, 24);
-    hiScoreMessage->x = scoreMessage->x;
-    hiScoreMessage->y = scoreMessage->y + scoreMessage->hitbox.h + 10;
-
-    // Create obstacle sprites
-    obstacleGap = player->height * 3.5;
-    obstacleSpeed = 2.6;
-
+    // Set obstacle properties
+    obstacleGap = player.h * 3.5;
+    obstacleSpeed = 2.65;
+    
     resetObstacles();
 
     GRAVITY_ACCELERATION = winHeight;
 
-    player->init(render, playerImgPath.c_str());
+    player.setImg(render, playerImgPath.c_str());
 
     // Draw the scene
     playFrame();
-    startMessage->draw();    
+    startMessage.draw();
     SDL_RenderPresent(render);
     // Wait for player to press space to start game
     waitForSpacePress();
@@ -118,7 +108,7 @@ int main(int argc, char *argv[])
         playFrame();
     }
 
-    player->destroy();
+    player.destroy();
     obstacleTop->destroy();
     obstacleBottom->destroy();
 
