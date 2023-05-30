@@ -34,6 +34,7 @@ float hdpi;
 SDL_Renderer *render;
 
 Sprite player;
+// Top obstacle, bottom obstacle, passed obstacle
 tuple<Sprite, Sprite, bool> obstacles[NUM_OBSTACLES];
 Sprite *obstacleTop;
 Sprite *obstacleBottom;

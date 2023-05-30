@@ -94,7 +94,7 @@ void playFrame()
         {
             if (event.key.keysym.scancode == SDL_SCANCODE_SPACE && playerSpeed > 0)
             {
-                playerSpeed = -player.h * 5.5 - score * 2;
+                playerSpeed = -player.h * 6.5 - score * 2;
             }
         }
     }
@@ -121,7 +121,11 @@ void playFrame()
         if (obstacleTop->x + obstacleTop->w < 0)
         {
             obstacleTop->x = get<0>(obstacles[lastObstacleIndex]).x + get<0>(obstacles[lastObstacleIndex]).w + display.w / NUM_OBSTACLES;
+            obstacleTop->y = -(rand() % (display.h / 3));
+
             obstacleBottom->x = obstacleTop->x;
+            obstacleBottom->y = obstacleTop->y + obstacleTop->h + obstacleGap;
+            
             get<2>(obstacles[i]) = false;
 
             lastObstacleIndex = i;

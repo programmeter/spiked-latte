@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
     resetObstacles();
 
-    GRAVITY_ACCELERATION = display.h;
+    GRAVITY_ACCELERATION = display.h * 1.3;
 
     player.setImg(render, playerImgPath.c_str());
 
