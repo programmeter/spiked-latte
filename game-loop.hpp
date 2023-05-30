@@ -10,6 +10,7 @@
 
 #include "sprite.hpp"
 #include "common.hpp"
+#include "conversions.hpp"
 
 using namespace std;
 
@@ -58,10 +59,10 @@ void resetObstacles()
         obstacleBottom = &get<1>(obstacles[i]);
 
         // Set attributes for top obstacle
-        obstacleTop->h = winHeight / 2;
-        obstacleTop->w = winWidth / 12;
-        obstacleTop->x = winWidth + i * winWidth / NUM_OBSTACLES;
-        obstacleTop->y = -(rand() % (winHeight / 3));
+        obstacleTop->h = display.h / 2;
+        obstacleTop->w = display.h / 6;
+        obstacleTop->x = display.w + i * display.w / NUM_OBSTACLES + i * obstacleTop->w;
+        obstacleTop->y = -(rand() % (display.h / 3));
 
         // Set attributes for bottom obstacle
         obstacleBottom->h = obstacleTop->h;
@@ -119,7 +120,7 @@ void playFrame()
         // Moves passed obstacles to front
         if (obstacleTop->x + obstacleTop->w < 0)
         {
-            obstacleTop->x = get<0>(obstacles[lastObstacleIndex]).x + get<0>(obstacles[lastObstacleIndex]).w + winWidth / NUM_OBSTACLES;
+            obstacleTop->x = get<0>(obstacles[lastObstacleIndex]).x + get<0>(obstacles[lastObstacleIndex]).w + display.w / NUM_OBSTACLES;
             obstacleBottom->x = obstacleTop->x;
             get<2>(obstacles[i]) = false;
 
@@ -168,7 +169,7 @@ void playFrame()
 
         // Out of bounds
         if (player.y + player.h <= 0 ||
-            player.y >= winHeight)
+            player.y >= display.h)
         {
             collided = true;
             outOfBounds = true;
@@ -192,8 +193,8 @@ void playFrame()
             deathMessage.draw();
         }
 
-        player.x = winWidth / 2 - player.w / 2;
-        player.y = winHeight / 2 + player.w / 2;
+        player.x = display.w / 2 - player.w / 2;
+        player.y = display.h / 2 + player.w / 2;
 
         playerSpeed = 0;
         score = 0;

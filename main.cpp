@@ -9,6 +9,7 @@
 #include "common.hpp"
 #include "game-loop.hpp"
 #include "text.hpp"
+#include "conversions.hpp"
 
 using namespace std;
 
@@ -19,20 +20,29 @@ int main(int argc, char *argv[])
         printf("Fatal error initializing SDL: %s\n", SDL_GetError());
     }
 
-    TTF_Init(); 
-
-    // Get display attributes and create fullscreen window
+    if (TTF_Init() != 0)
+    {
+        printf("Fatal error initializing TTF: %s\n", SDL_GetError());
+    }
+    
     SDL_GetCurrentDisplayMode(0, &display);
 
-    winWidth = display.w;
-    winHeight = display.h;
+    // Vertical, horizontal DPI of the display
+    SDL_GetDisplayDPI(0, NULL, &hdpi, &vdpi);
+
+    //display.w = 1920;
+    //display.h = 1080;
+
+    // Window width, height in inches
+    winWidthIn = display.w / hdpi;
+    winHeightIn = display.h / vdpi;
     displayRefreshRate = display.refresh_rate;
 
     SDL_Window *window = SDL_CreateWindow("Spiked latte",
                                           SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED,
-                                          winWidth,
-                                          winHeight,
+                                          display.w,
+                                          display.h,
                                           SDL_WINDOW_FULLSCREEN);
 
     render = SDL_CreateRenderer(window,
@@ -53,27 +63,27 @@ int main(int argc, char *argv[])
     hiScoreFile.close();
 
     // Set player properties
-    player.w = winHeight / 12;
-    player.h = winHeight / 12;
-    player.x = winWidth / 2 - player.w / 2;
-    player.y = winHeight / 2 + player.w / 2;
+    player.w = inToPx(winHeightIn / 12, vdpi);
+    player.h = player.w;
+    player.x = display.w / 2 - player.w / 2;
+    player.y = display.h / 2 + player.w / 2;
 
     // Create starting message
     Text startMessage;
 
     startMessage.setImg(render, "PRESS SPACE TO START", FONT_PATH, 24);
-    startMessage.x = winWidth / 2 - startMessage.hitbox.w / 2;
+    startMessage.x = display.w / 2 - startMessage.hitbox.w / 2;
     startMessage.y = player.y + player.h + 100;
 
     // Set death message properties
     deathMessage.setImg(render, "COFFEE SPILLED! PRESS SPACE TO START", FONT_PATH, 24);
-    deathMessage.x = winWidth / 2 - deathMessage.hitbox.w / 2;
+    deathMessage.x = display.w / 2 - deathMessage.hitbox.w / 2;
     deathMessage.y = player.y + player.h + 100;
 
     // Set "coffee missing" message properties
     missingMessage.setImg(render, "COFFEE MISSING! PRESS SPACE TO START", FONT_PATH, 24);
-    missingMessage.x = winWidth / 2 - missingMessage.hitbox.w / 2;
-    missingMessage.y = player.y + player.h + 100;    
+    missingMessage.x = display.w / 2 - missingMessage.hitbox.w / 2;
+    missingMessage.y = player.y + player.h + 100;
 
     // Set score counter properties
     scoreMessage.setImg(render, "SCORE 0", FONT_PATH, 24);
@@ -87,11 +97,11 @@ int main(int argc, char *argv[])
 
     // Set obstacle properties
     obstacleGap = player.h * 3.5;
-    obstacleSpeed = 2.65;
-    
+    obstacleSpeed = inToPx(winWidthIn / 800, hdpi);
+
     resetObstacles();
 
-    GRAVITY_ACCELERATION = winHeight;
+    GRAVITY_ACCELERATION = display.h;
 
     player.setImg(render, playerImgPath.c_str());
 

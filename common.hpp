@@ -25,9 +25,11 @@ using namespace std;
 bool running = true;
 
 SDL_DisplayMode display;
-int winWidth;
-int winHeight;
+float winWidthIn;
+float winHeightIn;
 int displayRefreshRate;
+float vdpi;
+float hdpi;
 
 SDL_Renderer *render;
 
