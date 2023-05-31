@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     hiScoreFile.close();
 
     // Set player properties
-    player.w = inToPx(winHeightIn / 12, vdpi);
+    player.w = display.h / 12;
     player.h = player.w;
     player.x = display.w / 2 - player.w / 2;
     player.y = display.h / 2 + player.w / 2;
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 
     // Set obstacle properties
     obstacleGap = player.h * 3.5;
-    obstacleSpeed = inToPx(winWidthIn / 800, hdpi);
+    obstacleSpeed = display.w / 5.17;
 
     resetObstacles();
 

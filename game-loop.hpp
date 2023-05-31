@@ -111,10 +111,10 @@ void playFrame()
         obstacleTop = &get<0>(obstacles[i]);
         obstacleBottom = &get<1>(obstacles[i]);
 
-        obstacleTop->x -= obstacleSpeed;
+        obstacleTop->x -= obstacleSpeed / displayRefreshRate;
         obstacleTop->draw();
 
-        obstacleBottom->x -= obstacleSpeed;
+        obstacleBottom->x -= obstacleSpeed / displayRefreshRate;
         obstacleBottom->draw();
 
         // Moves passed obstacles to front
