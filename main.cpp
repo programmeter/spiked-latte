@@ -30,9 +30,6 @@ int main(int argc, char *argv[])
     // Vertical, horizontal DPI of the display
     SDL_GetDisplayDPI(0, NULL, &hdpi, &vdpi);
 
-    //display.w = 1920;
-    //display.h = 1080;
-
     // Window width, height in inches
     winWidthIn = display.w / hdpi;
     winHeightIn = display.h / vdpi;
@@ -48,6 +45,8 @@ int main(int argc, char *argv[])
     render = SDL_CreateRenderer(window,
                                 -1,
                                 SDL_RENDERER_ACCELERATED);
+
+    SDL_ShowCursor(SDL_DISABLE);
 
     // Read previous high score from file
     ifstream hiScoreFile(HI_SCORE_PATH);

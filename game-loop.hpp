@@ -35,7 +35,7 @@ void waitForSpacePress()
 
     while (true)
     {
-        SDL_PollEvent(&event);
+        SDL_WaitEvent(&event);
 
         if (event.type == SDL_QUIT)
         {
@@ -62,7 +62,7 @@ void resetObstacles()
         obstacleTop->h = display.h / 2;
         obstacleTop->w = display.h / 6;
         obstacleTop->x = display.w + i * display.w / NUM_OBSTACLES + i * obstacleTop->w;
-        obstacleTop->y = -(rand() % (display.h / 3));
+        obstacleTop->y = -(rand() % obstacleGap);
 
         // Set attributes for bottom obstacle
         obstacleBottom->h = obstacleTop->h;
@@ -121,7 +121,7 @@ void playFrame()
         if (obstacleTop->x + obstacleTop->w < 0)
         {
             obstacleTop->x = get<0>(obstacles[lastObstacleIndex]).x + get<0>(obstacles[lastObstacleIndex]).w + display.w / NUM_OBSTACLES;
-            obstacleTop->y = -(rand() % (display.h / 3));
+            obstacleTop->y = -(rand() % obstacleGap);
 
             obstacleBottom->x = obstacleTop->x;
             obstacleBottom->y = obstacleTop->y + obstacleTop->h + obstacleGap;
