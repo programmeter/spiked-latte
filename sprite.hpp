@@ -52,9 +52,6 @@ private:
     SDL_Surface *surface;
     SDL_Texture *texture;
     SDL_Rect hitbox;
-
-    int tmpWidth;
-    int tmpHeight;
 };
 
 #endif

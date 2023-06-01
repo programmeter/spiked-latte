@@ -9,7 +9,6 @@
 #include "common.hpp"
 #include "game-loop.hpp"
 #include "text.hpp"
-#include "conversions.hpp"
 
 using namespace std;
 
@@ -27,12 +26,6 @@ int main(int argc, char *argv[])
     
     SDL_GetCurrentDisplayMode(0, &display);
 
-    // Vertical, horizontal DPI of the display
-    SDL_GetDisplayDPI(0, NULL, &hdpi, &vdpi);
-
-    // Window width, height in inches
-    winWidthIn = display.w / hdpi;
-    winHeightIn = display.h / vdpi;
     displayRefreshRate = display.refresh_rate;
 
     SDL_Window *window = SDL_CreateWindow("Spiked latte",

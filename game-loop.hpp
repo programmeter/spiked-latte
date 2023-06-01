@@ -10,7 +10,6 @@
 
 #include "sprite.hpp"
 #include "common.hpp"
-#include "conversions.hpp"
 
 using namespace std;
 
