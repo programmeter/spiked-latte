@@ -18,4 +18,4 @@ That's it! You should now be able to compile the code and run it!
 The compiled binary can now be run by typing `./spiked-latte` in the directory in which you compiled it.
 ## Installation
 ### On Windows
-To install on Windows, go to the *Releases* section on the GitHub page, and select the latest release. Download `setup-x64.msi` and run it. Continue with the installation through the installation wizard, and after you are done, the game should be installed. You should be able to run it from the start menu.
+To install on Windows, go to the *Releases* section on the GitHub page, and select the latest release. Download `*.msi` file and run it. Continue with the installation through the installation wizard, and after you are done, the game should be installed. You should be able to run it from the start menu.
