@@ -18,4 +18,7 @@ That's it! You should now be able to compile the code and run it!
 The compiled binary can now be run by typing `./spiked-latte` in the directory in which you compiled it.
 ## Installation
 ### On Windows
-To install on Windows, go to the *Releases* section on the GitHub page, and select the latest release. Download `*.msi` file and run it. Continue with the installation through the installation wizard, and after you are done, the game should be installed. You should be able to run it from the start menu.
+To install on Windows, go to the *Releases* section on the GitHub page, and select the latest release. Download `.msi` file and run it. Continue with the installation through the installation wizard, and after you are done, the game should be installed. You should be able to run it from the start menu.
+
+### On Linux (Debian based distros only)
+To install on Debian-based Linux distros, go to the *Releases* section on the GitHub page, and select the latest release. Download the `.deb` file, and from the directory where the downloaded file is located run `sudo apt install ./spiked-latte.deb`. You should be able to launch the game using the `.desktop` launcher, or by running `spiked-latte` in the terminal.
