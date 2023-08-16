@@ -21,4 +21,6 @@ The compiled binary can now be run by typing `./spiked-latte` in the directory i
 To install on Windows, go to the *Releases* section on the GitHub page, and select the latest release. Download `.msi` file and run it. Continue with the installation through the installation wizard, and after you are done, the game should be installed. You should be able to run it from the start menu.
 
 ### On Linux (Debian based distros only)
+NOTE: While it is possible to install this program on Linux, it is only available in the form of a `.deb` file. It is not recommended to install using `.deb` files for the stability of your system. If possible, I highly encourage building your own binary by following the instructions given above.
+
 To install on Debian-based Linux distros, go to the *Releases* section on the GitHub page, and select the latest release. Download the `.deb` file, and from the directory where the downloaded file is located run `sudo apt install ./spiked-latte.deb`. You should be able to launch the game using the `.desktop` launcher, or by running `spiked-latte` in the terminal.
